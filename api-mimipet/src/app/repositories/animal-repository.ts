@@ -41,7 +41,7 @@ class AnimalRepository {
 
     const animal_existe = await this.animalReporsitory.findOneBy({ id })
     if (!animal_existe) {
-      throw new ErrorExtention(404, "Animal(a) não encontrado")
+      throw new ErrorExtention(404, "Animal não encontrado")
     }
 
     await this.animalReporsitory.update(id, animal)

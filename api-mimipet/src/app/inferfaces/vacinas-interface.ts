@@ -9,3 +9,5 @@ interface IVacinaInput {
 interface IVacinaOutput extends IVacinaInput {
   id: number
 }
+
+export { IVacinaInput, IVacinaOutput }

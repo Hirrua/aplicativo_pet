@@ -4,7 +4,7 @@ interface IEstoqueInput {
   quantidade: number
   status?: string
   unidade_medida?: string
-  vencimentos_em: Date
+  vencimento_em: Date
   vacina_id: number
 }
 
@@ -12,3 +12,5 @@ interface IEstoqueOutput extends IEstoqueInput {
   id: number
   inserido_em: Date
 }
+
+export { IEstoqueInput, IEstoqueOutput }

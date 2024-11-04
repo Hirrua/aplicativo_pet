@@ -29,7 +29,7 @@ const estoqueSchemaValidation = Joi.object({
     "string.base": "O campo unidade de medida deve ser uma string",
     "string.max": "O campo unidade de medida deve ter no máximo 10 caracteres"
   }),
-  vencimentos_em: Joi.date().required().messages({
+  vencimento_em: Joi.date().required().messages({
     "date.base": "O campo vencimento deve ser uma data válida",
     "any.required": "O campo vencimento é obrigatório"
   }),

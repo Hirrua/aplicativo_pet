@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Vacina from "./vacinas";
 
 @Entity("estoques")
@@ -27,7 +27,11 @@ class Estoque {
   @Column("varchar", { length: 50, nullable: true })
   unidade_medida: string
 
+  @Column("int", { nullable: false })
+  vacina_id: number
+
   @ManyToOne(() => Vacina, (vacina) => vacina.estoques, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "vacina_id" })
   vacina: Vacina
 }
 
