@@ -17,3 +17,5 @@ interface IAplicacaoUpdate {
   animal_id?: number
   vacina_id?: number
 }
+
+export { IAplicacaoInput, IAplicacaoOutput, IAplicacaoUpdate }

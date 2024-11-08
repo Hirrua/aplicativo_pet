@@ -14,8 +14,8 @@ class TutorController {
     this.router.get('/', this.getAllTutores)
     this.router.get('/:id', this.getTutor)
     this.router.post('/', this.createTutor)
-    this.router.put('/:id', authenticationMiddleware, this.updateTutor)
-    this.router.delete('/:id', authenticationMiddleware, this.removeTutor)
+    this.router.put('/:id', this.updateTutor)
+    this.router.delete('/:id', this.removeTutor)
     this.router.post('/auth', this.authTokenTutor)
   }
 

@@ -11,9 +11,9 @@ class AnimalController {
   }
 
   private initializeRoutes() {
-    this.router.get('/', authenticationMiddleware, this.getAllAnimal)
-    this.router.get('/:id', authenticationMiddleware, this.getAnimal)
-    this.router.post('/', authenticationMiddleware, this.createAnimal)
+    this.router.get('/', this.getAllAnimal)
+    this.router.get('/:id', this.getAnimal)
+    this.router.post('/', this.createAnimal)
     this.router.put('/:id', authenticationMiddleware, this.updateAnimal)
     this.router.delete('/:id', authenticationMiddleware, this.removeAnimal)
   }

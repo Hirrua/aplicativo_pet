@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Vacina from "./vacinas";
 import Animal from "./animal";
 
@@ -16,10 +16,18 @@ class AplicacaoVacina {
   @Column("varchar", { length: 255, nullable: true })
   responsavel_aplicacao: string
 
+  @Column('int', { nullable: false })
+  vacina_id: number
+
+  @Column('int', { nullable: false })
+  animal_id: number
+
   @ManyToOne(() => Animal, (animal) => animal.aplicacoesVacinas, { onDelete: "CASCADE" })
+  @JoinColumn({ name: 'animal_id' })
   animal: Animal
 
   @ManyToOne(() => Vacina, (vacina) => vacina.aplicacoesVacinas, { onDelete: "CASCADE" })
+  @JoinColumn({ name: 'vacina_id' })
   vacina: Vacina
 }
 

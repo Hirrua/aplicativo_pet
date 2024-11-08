@@ -13,7 +13,10 @@ class AnimalRepository {
   }
 
   static async getOneAnimal(id: number): Promise<IAnimalOutput> {
-    const animal = await this.animalReporsitory.findOneBy({ id })
+    const animal = await this.animalReporsitory.findOne({ 
+      where: { id },
+      relations: ["aplicacoesVacinas", "aplicacoesVacinas.vacina"]
+    })
     if (!animal) {
       throw new ErrorExtention(404, "Animal(a) não encontrado")
     }
@@ -25,13 +28,13 @@ class AnimalRepository {
     const { error } = animalSchemaValidation.validate(animal, { abortEarly: false })
     if (error) {
       const validationError = error.details.map((detail: ValidationErrorItem) => detail.message)
-      throw new ErrorExtention(400, validationError.join(',')) // MELHORAR O TRATAMENTO DE ERROS
+      throw new ErrorExtention(400, validationError.join(','))
     }
 
     const newAnimal = await this.animalReporsitory.save(animal)
     return newAnimal
   }
-  // SCHEMA PARA INTERFACE DE UPDATE
+
   static async putAnimal(id: number, animal: IAnimalUpdateInput): Promise<string> {
     const { error } = animalSchemaValidation.validate(animal, { abortEarly: false })
     if (error) {
