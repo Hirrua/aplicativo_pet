@@ -1,8 +1,8 @@
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: "https://30f52e6a50557596bd656d21889a4a73.serveo.net",
-  timeout: 5000
+  baseURL: "https://donkey-factual-slug.ngrok-free.app/",
+  timeout: 2000
 })
 
 export default api

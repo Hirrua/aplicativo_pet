@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Animal from "./animal";
 import Estoque from "./estoque";
+import AplicacaoVacina from "./aplicacao";
 
 @Entity("vacinas")
 class Vacina {
@@ -25,8 +26,8 @@ class Vacina {
   @OneToMany(() => Estoque, (estoque) => estoque.vacina)
   estoques: Estoque[]
 
-  @ManyToOne(() => Animal, (animal) => animal.aplicacoesVacinas, { onDelete: "CASCADE" })
-  aplicacoesVacinas: Animal
+  @OneToMany(() => AplicacaoVacina, (aplicacaoVacina) => aplicacaoVacina.vacina, { onDelete: "CASCADE" })
+  aplicacoesVacinas: AplicacaoVacina[]
 }
 
 export default Vacina

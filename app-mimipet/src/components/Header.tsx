@@ -5,24 +5,22 @@ import { CustomImage } from "./CustomImage";
 const Header: React.FC = () => {
   return (
     <View style={styles.header}>
-      <CustomImage.Local filePathByRequire={require("../../public/mimi_pet_v2_cortada.png")} height={50} width={80}/>
+      <CustomImage.Local
+        filePathByRequire={require("../../public/mimi_pet_cortada.png")}
+        height={80}
+        width={200}
+      />
     </View>
+  );
+};
 
-  )
-}
-
-export default Header
+export default Header;
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#FE6863",
+    backgroundColor: "#fff",
     padding: 20,
     paddingTop: 40,
     alignItems: "center",
   },
-  headerText: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "bold",
-  }
-})
+});

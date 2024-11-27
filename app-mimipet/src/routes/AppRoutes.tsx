@@ -4,11 +4,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/HomeScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import AnimalDetailsScreen from "../screens/AnimalDetailScreen";
-import IconMaterial from "react-native-vector-icons/MaterialIcons"
+import IconMaterial from "react-native-vector-icons/MaterialIcons";
+import VacinasDetailSceen from "../screens/VacinasDetailScreen";
 
 export type RootStackParmsList = {
   Home: undefined
-  Animal: {id: number}
+  Animal: {animal_id: number}
+  Vacinas: {vacina_id: number}
 }
 
 const Stack = createStackNavigator<RootStackParmsList>()
@@ -23,6 +25,11 @@ const StackRoutes = () => {
       <Stack.Screen
         name="Animal"
         component={AnimalDetailsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Vacinas"
+        component={VacinasDetailSceen}
         options={{ headerShown: false }}
       />
   </Stack.Navigator>

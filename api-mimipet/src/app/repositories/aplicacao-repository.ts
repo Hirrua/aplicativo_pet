@@ -6,7 +6,7 @@ import { AppDataSource } from "../../database/data-source"
 import { aplicacaoSchemaValidation } from "../utils/validation/aplicacao-validation"
 import ErrorExtention from "../utils/error"
 import { ValidationErrorItem } from "joi"
-import { IAplicacaoInput, IAplicacaoOutput } from "../inferfaces/aplicacao-interface"
+import { IAplicacaoInput, IAplicacaoOutput, IAplicacaoCompleta } from "../inferfaces/aplicacao-interface"
 import { MoreThanOrEqual } from "typeorm"
 
 class AplicacaoVacinaRepository {
@@ -62,22 +62,75 @@ class AplicacaoVacinaRepository {
     return aplicarVacinacao
   }
 
+  static async getAplicacaoById(id: number): Promise<IAplicacaoCompleta> {
+    const aplicacao_animal = await this.aplicacaoRepository.findOne({
+      where: { id },
+      relations: ['vacina', 'animal'],
+    });
+  
+    if (!aplicacao_animal) {
+      throw new ErrorExtention(404, "Nenhuma aplicação encontrada para esse animal!")
+    }
+  
+    return {
+      id: aplicacao_animal.id,
+      data_aplicacao: aplicacao_animal.data_aplicacao,
+      quantidade_aplicada: aplicacao_animal.quantidade_aplicada,
+      responsavel_aplicacao: aplicacao_animal.responsavel_aplicacao,
+      vacina_id: aplicacao_animal.vacina.id,
+      animal_id: aplicacao_animal.animal.id,
+      vacina: aplicacao_animal.vacina,
+      animal: aplicacao_animal.animal,
+    }
+  }
+  
   static async getAplicacaoByAnimal(animal_id: number): Promise<IAplicacaoOutput[]> {
-    const aplicacoes = await this.aplicacaoRepository.find({
+    const aplicacoes_animal = await this.aplicacaoRepository.find({
       where: { animal_id },
       relations: ['vacina', 'animal'],
     })
 
-    return aplicacoes.map((aplicacao) => ({
+    if (!aplicacoes_animal || aplicacoes_animal.length === 0) {
+      throw new ErrorExtention(404, "Nenhuma aplicação encontrada para esse animal!")
+    }
+
+    return aplicacoes_animal.map((aplicacao) => ({
       id: aplicacao.id,
       data_aplicacao: aplicacao.data_aplicacao,
       quantidade_aplicada: aplicacao.quantidade_aplicada,
       responsavel_aplicacao: aplicacao.responsavel_aplicacao,
-      vacina_id: aplicacao.vacina_id,
-      animal_id: aplicacao.animal_id,
-      vacina: aplicacao.vacina,
-      animal: aplicacao.animal
+      vacina_id: aplicacao.vacina.id,  
+      animal_id: aplicacao.animal.id,  
+      vacina: aplicacao.vacina,        
+      animal: aplicacao.animal         
     }))
+  }
+
+  static async getAplicacoesRcentes(): Promise<IAplicacaoInput[]> {
+    try {
+      const aplicacoes = await this.aplicacaoRepository.find({
+        relations: ["vacina", "animal"],
+        order: { data_aplicacao: "DESC" },
+        take: 5
+      })
+
+      if (!aplicacoes || aplicacoes.length === 0) {
+        throw new ErrorExtention(404, "Não foi aplicada nenhuma vacina até o momento!")
+      }
+
+      return aplicacoes.map((aplicacao) => ({
+        id: aplicacao.id,
+        data_aplicacao: aplicacao.data_aplicacao,
+        quantidade_aplicada: aplicacao.quantidade_aplicada,
+        responsavel_aplicacao: aplicacao.responsavel_aplicacao,
+        vacina_id: aplicacao.vacina_id,
+        animal_id: aplicacao.animal_id,
+        vacina: aplicacao.vacina,
+        animal: aplicacao.animal
+      }))
+    } catch (error) {
+      throw new Error("Erro ao buscar as aplicações recentes")
+    }
   }
 }
 
