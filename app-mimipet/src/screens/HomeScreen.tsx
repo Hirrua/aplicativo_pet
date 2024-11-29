@@ -29,6 +29,7 @@ interface Animal {
 const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [aplicacoesRecentes, setAplicacoesRecentes] = useState<Aplicacao[]>([])
   const [animais, setAnimais] = useState<Animal[]>([])
+  console.log("tela home")
 
   useEffect(() => {
     const fetchAplicacoesRecentes = async () => {
@@ -87,7 +88,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
               style={styles.button}
               onPress={() => navigation.navigate("Vacinas", { vacina_id: item.vacina.id })}
               >
-              <Text style={styles.buttonText}>Ver Detalhes do Animal</Text>
+              <Text style={styles.buttonText}>Ver Detalhes da Vacina</Text>
             </TouchableOpacity>
           </View>
         )}
