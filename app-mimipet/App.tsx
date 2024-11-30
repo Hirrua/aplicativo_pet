@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { StackRoutes, TabRoutes } from "./src/routes/AppRoutes";
+import { HomeStackRoutes, TabRoutes } from "./src/routes/AppRoutes";
 import InitialContextComponent from "./src/context/InitialContext";
 
 const App = () => {

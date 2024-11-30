@@ -4,7 +4,7 @@ import api from "../services/api"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParmsList } from "../routes/AppRoutes"
 import Header from "../components/Header"
-import BotaoInfos from "../components/BotaoInfo"
+import { useFocusEffect } from "@react-navigation/native"
 
 interface Animal {
   id: number
@@ -19,29 +19,26 @@ type Props = StackScreenProps<RootStackParmsList, "Animais">
 const ListarAnimaisScreen = ({ navigation }: Props) => {
   const [animais, setAnimais] = useState<Animal[]>([])
   const [loading, setLoading] = useState(true)
-  console.log("tela animal")
-  useEffect(() => {
-    const fetchAnimals = async () => {
-      try {
-        const response = await api.get("/animais")
-        setAnimais(response.data)
-      } catch (error) {
-        console.error("Erro ao buscar lista de animais:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
 
-    fetchAnimals()
-  }, [])
+  const fetchAnimals = async () => {
+    try {
+      const response = await api.get("/animais")
+      setAnimais(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar lista de animais:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchAnimals()
+    }, [])
+  )
 
   const handleAnimalDetails = (animalId: number) => {
     navigation.navigate("Animal", { animal_id: animalId })
-  }
-
-  const handleEditAnimal = (animalId: number) => {
-    console.log("Editar Animal com ID:", animalId)
-    navigation.navigate("Animal", { animal_id: animalId }) 
   }
 
   if (loading) {
@@ -70,10 +67,14 @@ const ListarAnimaisScreen = ({ navigation }: Props) => {
               <Text style={styles.cardText}>Sexo: {item.sexo}</Text>
             </TouchableOpacity>
 
-            <BotaoInfos
-              onPress={() => handleEditAnimal(item.id)}
-              label="Editar informação"
-            />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('EditarInfo', { edit_animal_id: item.id })}
+            >
+              <Text style={styles.buttonText}>Editar Informações</Text>
+            </TouchableOpacity>
+              
+            
 
           </View>
         )}
@@ -117,6 +118,17 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 16,
     marginBottom: 5,
+  },
+  button: {
+    marginTop: 10,
+    backgroundColor: "#FE6863",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
   }
 })
 

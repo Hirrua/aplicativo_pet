@@ -38,7 +38,6 @@ class AplicacaoVacinaController {
   }
 
   private async getRecenteAplicacao(req: Request, res: Response) {
-    console.log("Requisição para buscar as aplicações recentes recebida.");
   
     try {
       const aplicacoes = await AplicacaoVacinaRepository.getAplicacoesRcentes()

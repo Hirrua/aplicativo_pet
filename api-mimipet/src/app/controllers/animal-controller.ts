@@ -14,8 +14,8 @@ class AnimalController {
     this.router.get('/', this.getAllAnimal)
     this.router.get('/:id', this.getAnimal)
     this.router.post('/', this.createAnimal)
-    this.router.put('/:id', authenticationMiddleware, this.updateAnimal)
-    this.router.delete('/:id', authenticationMiddleware, this.removeAnimal)
+    this.router.put('/:id', this.updateAnimal)
+    this.router.delete('/:id', this.removeAnimal)
   }
 
   private async getAllAnimal(req: Request, res: Response) {

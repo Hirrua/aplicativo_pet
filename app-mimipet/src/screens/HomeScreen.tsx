@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native"
 import api from "../services/api"
 import Header from "../components/Header"
+import { useFocusEffect } from "@react-navigation/native"
 
 interface Vacina {
   id: number
@@ -29,30 +30,31 @@ interface Animal {
 const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [aplicacoesRecentes, setAplicacoesRecentes] = useState<Aplicacao[]>([])
   const [animais, setAnimais] = useState<Animal[]>([])
-  console.log("tela home")
-
-  useEffect(() => {
-    const fetchAplicacoesRecentes = async () => {
-      try {
-        const response = await api.get("/aplicar/recentes")
-        setAplicacoesRecentes(response.data)
-      } catch (error) {
-        console.error("Erro ao buscar aplicações recentes", error)
-      }
+ 
+  const fetchAplicacoesRecentes = async () => {
+    try {
+      const response = await api.get("/aplicar/recentes")
+      setAplicacoesRecentes(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar aplicações recentes", error)
     }
+  }
 
-    const fetchAnimais = async () => {
-      try {
-        const response = await api.get("/animais")
-        setAnimais(response.data)
-      } catch (error) {
-        console.error("Erro ao buscar animais", error)
-      }
+  const fetchAnimais = async () => {
+    try {
+      const response = await api.get("/animais")
+      setAnimais(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar animais", error)
     }
+  }
 
-    fetchAplicacoesRecentes()
-    fetchAnimais()
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchAplicacoesRecentes()
+      fetchAnimais()
+    }, [])
+  )
 
   return (
 

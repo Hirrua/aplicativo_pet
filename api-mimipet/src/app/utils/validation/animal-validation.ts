@@ -39,4 +39,39 @@ const animalSchemaValidation = Joi.object({
   })
 })
 
-export default animalSchemaValidation
+const animalUpdateSchema = Joi.object({
+  nome: Joi.string().min(3).max(100).optional().messages({
+    'string.base': 'Nome deve ser uma string',
+    'string.empty': 'Nome não pode ser vazio',
+    'string.min': 'Nome deve ter pelo menos 3 caracteres',
+  }),
+
+  raca: Joi.string().min(3).max(50).optional().messages({
+    'string.base': 'Raça deve ser uma string',
+    'string.empty': 'Raça não pode ser vazia',
+    'string.min': 'Raça deve ter pelo menos 3 caracteres',
+  }),
+
+  sexo: Joi.string().min(1).max(1).optional().messages({
+    'string.base': 'Sexo deve ter um caractere F ou M',
+  }),
+
+  especie: Joi.string().min(3).max(50).optional().messages({
+    'string.base': 'Espécie deve ser uma string',
+    'string.empty': 'Espécie não pode ser vazia',
+    'string.min': 'Espécie deve ter pelo menos 3 caracteres',
+  }),
+
+  cor: Joi.string().min(3).max(30).optional().messages({
+    'string.base': 'Cor deve ser uma string',
+    'string.empty': 'Cor não pode ser vazia',
+    'string.min': 'Cor deve ter pelo menos 3 caracteres',
+  }),
+
+  memorial: Joi.boolean().optional().messages({
+    'boolean.base': 'Memorial deve ser um valor booleano (true ou false)',
+    'any.required': 'Memorial é obrigatório'
+  })
+})
+
+export { animalSchemaValidation, animalUpdateSchema }

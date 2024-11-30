@@ -2,7 +2,7 @@ import Animal from "../entities/animal";
 import { AppDataSource } from "../../database/data-source";
 import ErrorExtention from "../utils/error";
 import { IAnimalInput, IAnimalOutput, IAnimalUpdateInput } from "../inferfaces/animal-interface";
-import animalSchemaValidation from "../utils/validation/animal-validation";
+import { animalSchemaValidation, animalUpdateSchema } from "../utils/validation/animal-validation";
 import { ValidationErrorItem } from "joi";
 
 class AnimalRepository {
@@ -36,7 +36,8 @@ class AnimalRepository {
   }
 
   static async putAnimal(id: number, animal: IAnimalUpdateInput): Promise<string> {
-    const { error } = animalSchemaValidation.validate(animal, { abortEarly: false })
+    const { error } = animalUpdateSchema.validate(animal, { abortEarly: false })
+  
     if (error) {
       const validationError = error.details.map((detail: ValidationErrorItem) => detail.message)
       throw new ErrorExtention(400, validationError.join(','))

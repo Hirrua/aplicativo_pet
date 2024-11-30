@@ -7,37 +7,55 @@ import AnimalDetailsScreen from "../screens/AnimalDetailScreen"
 import IconMaterial from "react-native-vector-icons/MaterialIcons"
 import VacinasDetailSceen from "../screens/VacinasDetailScreen"
 import ListarAnimaisScreen from "../screens/ListarAnimaisScreen"
-import { Text } from "react-native" // Importação para o Text
+import EditarInfoScreen from "../screens/EditarInfoScreen"
+import { Text } from "react-native"
 
 export type RootStackParmsList = {
   Home: undefined
   Animais: undefined
   Animal: { animal_id: number }
   Vacinas: { vacina_id: number }
+  EditarInfo: { edit_animal_id: number }
 }
 
-const Stack = createStackNavigator<RootStackParmsList>()
-const StackRoutes = () => {
+const HomeStack = createStackNavigator<RootStackParmsList>()
+const HomeStackRoutes = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <HomeStack.Navigator>
+      <HomeStack.Screen
         name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="Animal"
-        component={AnimalDetailsScreen}
+        component={AnimalDetailsScreen} 
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      <HomeStack.Screen
         name="Vacinas"
         component={VacinasDetailSceen}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+    </HomeStack.Navigator>
   )
 }
+
+const AnimaisStack = createStackNavigator<RootStackParmsList>()
+const AnimaisStackNavigator = () => (
+  <AnimaisStack.Navigator>
+    <AnimaisStack.Screen 
+      name="Animais"
+      component={ListarAnimaisScreen}
+      options={{ headerShown: false }}
+    />
+    <AnimaisStack.Screen
+      name="EditarInfo"
+      component={EditarInfoScreen}
+      options={{ headerShown: false }} 
+    />
+  </AnimaisStack.Navigator>
+)
 
 const Tab = createBottomTabNavigator<RootStackParmsList>()
 const TabRoutes = () => {
@@ -47,7 +65,7 @@ const TabRoutes = () => {
     >
       <Tab.Screen
         name="Home"
-        component={StackRoutes}
+        component={HomeStackRoutes}
         options={({ route }) => ({
           tabBarIcon: ({ focused, color, size = 10 }) => {
             const iconColor = focused ? "#FE6863" : "#C3E036"
@@ -65,7 +83,7 @@ const TabRoutes = () => {
       />
       <Tab.Screen
         name="Animais"
-        component={ListarAnimaisScreen}
+        component={AnimaisStackNavigator}
         options={({ route }) => ({
           tabBarIcon: ({ focused, color, size = 10 }) => {
             const iconColor = focused ? "#FE6863" : "#C3E036"
@@ -85,4 +103,4 @@ const TabRoutes = () => {
   )
 }
 
-export { StackRoutes, TabRoutes }
+export { HomeStackRoutes, TabRoutes }
