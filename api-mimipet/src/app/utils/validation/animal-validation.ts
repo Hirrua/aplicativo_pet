@@ -33,10 +33,14 @@ const animalSchemaValidation = Joi.object({
     "string.min": "O campo raca deve ter pelo menos 3 caracteres",
     "string.max": "O campo raca deve ter no máximo 50 caracteres",
   }),
+  memorial: Joi.boolean().optional().messages({
+    'boolean.base': 'Memorial deve ser um valor booleano (true ou false)',
+  }),
   id_tutor: Joi.number().required().messages({
     "number.base": "O user_id precisa ser um numero",
     "number.empty": "O user_id não pode estar vazio"
-  })
+  }),
+  foto_animal: Joi.string().optional()
 })
 
 const animalUpdateSchema = Joi.object({
@@ -70,8 +74,8 @@ const animalUpdateSchema = Joi.object({
 
   memorial: Joi.boolean().optional().messages({
     'boolean.base': 'Memorial deve ser um valor booleano (true ou false)',
-    'any.required': 'Memorial é obrigatório'
-  })
+  }),
+  foto_animal: Joi.string().optional()
 })
 
 export { animalSchemaValidation, animalUpdateSchema }

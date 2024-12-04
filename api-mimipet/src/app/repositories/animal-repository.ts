@@ -26,11 +26,12 @@ class AnimalRepository {
 
   static async postAnimal(animal: IAnimalInput): Promise<IAnimalOutput> {
     const { error } = animalSchemaValidation.validate(animal, { abortEarly: false })
+    console.log(error)
     if (error) {
       const validationError = error.details.map((detail: ValidationErrorItem) => detail.message)
       throw new ErrorExtention(400, validationError.join(','))
     }
-
+    console.log(animal)
     const newAnimal = await this.animalReporsitory.save(animal)
     return newAnimal
   }

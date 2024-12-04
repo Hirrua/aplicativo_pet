@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native"
 import api from "../services/api"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -69,16 +69,23 @@ const ListarAnimaisScreen = ({ navigation }: Props) => {
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('EditarInfo', { edit_animal_id: item.id })}
+              onPress={() =>
+                navigation.navigate("EditarInfo", { edit_animal_id: item.id })
+              }
             >
               <Text style={styles.buttonText}>Editar Informações</Text>
             </TouchableOpacity>
-              
-            
-
           </View>
         )}
         contentContainerStyle={styles.listContainer}
+        ListFooterComponent={
+          <TouchableOpacity
+            style={styles.buttonAdd}
+            onPress={() => navigation.navigate("Cadastrar")}
+          >
+            <Text style={styles.buttonText}>Adicionar Animal</Text>
+          </TouchableOpacity>
+        }
       />
     </>
   )
@@ -129,7 +136,14 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
-  }
+  },
+  buttonAdd: {
+    marginTop: 20,
+    backgroundColor: "#C3E036",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
 })
 
 export default ListarAnimaisScreen

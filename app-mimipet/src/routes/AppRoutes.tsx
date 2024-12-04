@@ -8,6 +8,7 @@ import IconMaterial from "react-native-vector-icons/MaterialIcons"
 import VacinasDetailSceen from "../screens/VacinasDetailScreen"
 import ListarAnimaisScreen from "../screens/ListarAnimaisScreen"
 import EditarInfoScreen from "../screens/EditarInfoScreen"
+import CadastrarAnimalScreen from "../screens/CadastrarAnimal"
 import { Text } from "react-native"
 
 export type RootStackParmsList = {
@@ -16,6 +17,7 @@ export type RootStackParmsList = {
   Animal: { animal_id: number }
   Vacinas: { vacina_id: number }
   EditarInfo: { edit_animal_id: number }
+  Cadastrar: undefined
 }
 
 const HomeStack = createStackNavigator<RootStackParmsList>()
@@ -48,6 +50,11 @@ const AnimaisStackNavigator = () => (
       name="Animais"
       component={ListarAnimaisScreen}
       options={{ headerShown: false }}
+    />
+    <AnimaisStack.Screen 
+        name="Cadastrar"
+        component={CadastrarAnimalScreen}
+        options={{ headerShown: false }}
     />
     <AnimaisStack.Screen
       name="EditarInfo"

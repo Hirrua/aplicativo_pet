@@ -32,6 +32,9 @@ class Animal {
   @CreateDateColumn()
   atualizado_em: Date
 
+  @Column('varchar', { nullable: true })
+  foto_animal: string
+
   @Column('int', { nullable: false })
   id_tutor: number
 
