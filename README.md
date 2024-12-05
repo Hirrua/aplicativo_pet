@@ -50,4 +50,3 @@
 - Antes de aplicar a vacina o sistema deve verificar se existe estoque
 - Todas as vacinações devem ser registradas no aplicativo e ser acessadas em um histórico de saúde
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/703650b9-aae5-4be5-bbec-7fd1aab2791e/5430c64d-f3ca-4abe-ad46-83d916e51691/image.png)
