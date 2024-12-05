@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet, Image } from "react-native"
 import api from "../services/api"
 import { StackScreenProps } from "@react-navigation/stack"
 import { RootStackParmsList } from "../routes/AppRoutes"
+import Icon from "react-native-vector-icons/FontAwesome"
 import Header from "../components/Header"
 
 interface Animal {
@@ -15,6 +16,7 @@ interface Animal {
   criado_em: string
   atualizado_em: string
   foto_animal?: string
+  memorial?: boolean
 }
 
 interface Vacina {
@@ -88,11 +90,25 @@ const AnimalDetailsScreen = ({ route }: Props) => {
           <View style={styles.detailsContainer}>
             <Text style={styles.detailText}>Espécie: {animal.especie}</Text>
             <Text style={styles.detailText}>Raça: {animal.raca}</Text>
-            <Text style={styles.detailText}>Sexo: {animal.sexo}</Text>
+            <Text style={styles.detailText}>
+              Sexo: {animal.sexo === "F" ? "Fêmea" : animal.sexo === "M" ? "Macho" : animal.sexo}
+            </Text>
             <Text style={styles.detailText}>Cor: {animal.cor}</Text>
             <Text style={styles.detailText}>
               Criado em: {new Date(animal.criado_em).toLocaleDateString()}
             </Text>
+
+             {animal.memorial && (
+              <View style={styles.memorialContainer}>
+                <Icon
+                  name="heart"
+                  size={30}
+                  color="#FE6863"
+                  style={styles.angelIcon}
+                />
+                <Text style={styles.memorialText}>Em memória de um anjo querido.</Text>
+              </View>
+            )}
           </View>
         </View>
       )}
@@ -165,6 +181,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 6,
   },
+  memorialContainer: {
+    marginTop: 20,
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#fff0f0",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#FE6863",
+  },
+  angelIcon: {
+    marginBottom: 10,
+  },
+  memorialText: {
+    fontSize: 16,
+    color: "#FE6863",
+    fontWeight: "bold",
+  },
   card: {
     backgroundColor: "#fff",
     padding: 15,
@@ -192,5 +225,4 @@ const styles = StyleSheet.create({
     color: "#999",
   },
 })
-
 export default AnimalDetailsScreen

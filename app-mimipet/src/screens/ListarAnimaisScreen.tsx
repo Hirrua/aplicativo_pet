@@ -64,7 +64,9 @@ const ListarAnimaisScreen = ({ navigation }: Props) => {
               <Text style={styles.cardTitle}>{item.nome}</Text>
               <Text style={styles.cardText}>Espécie: {item.especie}</Text>
               <Text style={styles.cardText}>Raça: {item.raca}</Text>
-              <Text style={styles.cardText}>Sexo: {item.sexo}</Text>
+              <Text style={styles.cardText}>
+              Sexo: {item.sexo === "F" ? "Fêmea" : item.sexo === "M" ? "Macho" : item.sexo}
+            </Text>
             </TouchableOpacity>
 
             <TouchableOpacity

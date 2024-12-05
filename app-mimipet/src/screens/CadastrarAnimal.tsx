@@ -7,10 +7,16 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView,
 } from "react-native"
 import * as ImagePicker from "expo-image-picker"
 import api from "../services/api"
 import Header from "../components/Header"
+import { Picker } from "@react-native-picker/picker"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParmsList } from "../routes/AppRoutes"
+
+type HomeScreenProp = StackNavigationProp<RootStackParmsList, "Home">
 
 const CadastrarAnimalScreen = ({ navigation }: { navigation: any }) => {
   const [nome, setNome] = useState("")
@@ -21,7 +27,7 @@ const CadastrarAnimalScreen = ({ navigation }: { navigation: any }) => {
   const [memorial, setMemorial] = useState(false)
   const [fotoAnimal, setFotoAnimal] = useState<string | null>(null)
 
-  const idTutor = 1 // Substitua pelo ID do tutor obtido após implementar o login.
+  const idTutor = 1
 
   const handleSelectImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
@@ -61,7 +67,7 @@ const CadastrarAnimalScreen = ({ navigation }: { navigation: any }) => {
     try {
       await api.post("/animais", animalData)
       Alert.alert("Sucesso", "Animal cadastrado com sucesso!")
-      navigation.goBack()
+      navigation.navigate("Home")
     } catch (error) {
       console.error("Erro ao cadastrar animal:", error)
       Alert.alert("Erro", "Não foi possível cadastrar o animal.")
@@ -71,7 +77,7 @@ const CadastrarAnimalScreen = ({ navigation }: { navigation: any }) => {
   return (
     <>
       <Header />
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Cadastro de Animal</Text>
         <TextInput
           style={styles.input}
@@ -97,22 +103,25 @@ const CadastrarAnimalScreen = ({ navigation }: { navigation: any }) => {
           value={cor}
           onChangeText={setCor}
         />
-        <TextInput
+        
+        <Text style={styles.label}>Sexo</Text>
+        <Picker
+          selectedValue={sexo}
+          onValueChange={(itemValue) => setSexo(itemValue)}
           style={styles.input}
-          placeholder="Sexo"
-          value={sexo}
-          onChangeText={setSexo}
-        />
+        >
+          <Picker.Item label="Selecione o sexo" value="" />
+          <Picker.Item label="Fêmea" value="F" />
+          <Picker.Item label="Macho" value="M" />
+        </Picker>
+
         <View style={styles.checkboxContainer}>
           <TouchableOpacity
             style={styles.checkbox}
             onPress={() => setMemorial(!memorial)}
           >
             <View
-              style={[
-                styles.checkboxInner,
-                memorial && styles.checkboxSelected,
-              ]}
+              style={[styles.checkboxInner, memorial && styles.checkboxSelected]}
             />
           </TouchableOpacity>
           <Text style={styles.checkboxLabel}>Memorial</Text>
@@ -128,15 +137,13 @@ const CadastrarAnimalScreen = ({ navigation }: { navigation: any }) => {
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitButtonText}>Cadastrar Animal</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </>
-
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
     backgroundColor: "#fff",
   },
@@ -155,6 +162,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontSize: 16,
     backgroundColor: "#fff",
+  },
+  label: {
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 10,
   },
   checkboxContainer: {
     flexDirection: "row",
