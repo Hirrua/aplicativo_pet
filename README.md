@@ -1,6 +1,6 @@
 **Descrição do projeto**
 
-- Mimi Pet temo como objetivo facilitar e melhorar o acompanhamento das informações dos animais de estimação, focando no momento nas vacinas, medicamentos, além de possibilitar adoção de animais que precisam de lares, bem como o usuário que utiliza o aplicativo possam colocar para adoção.
+- Mimi Pet tem como objetivo facilitar e melhorar o acompanhamento das informações dos animais de estimação, focando no momento nas vacinas, medicamentos, além de possibilitar adoção de animais que precisam de lares, bem como o usuário que utiliza o aplicativo possam colocar para adoção.
 
 **Tecnologias utilizadas**
 
